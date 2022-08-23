@@ -33,6 +33,7 @@ module.exports = () => {
         publicPath: '/',
         inject: true,
         theme_color: '#555555',
+        fingerprints: false,
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
