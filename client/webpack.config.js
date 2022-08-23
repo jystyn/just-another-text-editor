@@ -18,30 +18,29 @@ module.exports = () => {
       // TODO: Add and configure workbox plugins for a service worker and manifest file.
       new HtmlWebpackPlugin({
         title: 'JATE',
-        filename: 'index.html',
-        template: path.join(__dirname, 'src/index.html'),
-        inject: 'body'
+        template: './index.html',
+      }),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js'
       }),
       new WebpackPwaManifest({
-        name: 'Just Another Text Editor',
+        name: 'text-editor',
         short_name: 'JATE',
         description: 'Setting Up a PWA Text Editor',
         background_color: '#555555',
-        start_url: './',
-        publicPath: './',
+        start_url: '/',
+        publicPath: '/',
         inject: true,
         theme_color: '#555555',
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
             ios: true
           },
         ]
-      }),
-      new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'src-sw.js'
       })
     ],
 
@@ -58,7 +57,11 @@ module.exports = () => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env']
+              presets: ['@babel/preset-env'],
+              plugins: [
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/transform-runtime'
+              ]
             }
           }
         }
